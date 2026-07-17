@@ -40,9 +40,10 @@ GitHub repo `hilo` created (empty), kit rebuilt + offline-tested in Claude's clo
 workspace, rules re-verified live, architecture diagram, deck (slots open),
 Devpost description (§6), video script (§4), CI workflow for live smoke testing.
 
-Not done, in order: API key → smoke GREEN → first live session + restart-resume →
-push to GitHub → Devpost DRAFT → (optional) free-quota check + $5 budget alert →
-record video Sat → deck slots Sat → SUBMIT Sunday.
+Done Fri night (live-verified via CI on the real endpoint): API key ✓ smoke GREEN
+(qwen-turbo, 1.1s) ✓ first live session + restart-resume ✓ pushed to GitHub ✓.
+Not done, in order: Devpost DRAFT (tonight) → (optional) free-quota check + $5 budget
+alert → record video Sat → deck slots Sat → SUBMIT Sunday.
 
 ## §3 Day-by-day
 
@@ -83,10 +84,10 @@ Brief lines to type in frame 3 (exactly these — they seed the §5/§6 story):
 2. Problem: the re-explanation tax (every session starts from zero).
 3. Demo screenshot **[SLOT: resume-greeting screenshot from video frame 5]**.
 4. Architecture (assets/architecture.png).
-5. Track fit: three judges' phrases → three design decisions. **[SLOT: MODEL — final model name from smoke test]**.
+5. Track fit: three judges' phrases → three design decisions. qwen-turbo (locked — live-verified Fri, 1.1s response).
 6. Links + what's next. **[SLOT: USER — github.com/phazon2/hilo]**.
 
-## §6 Devpost description (paste as-is; fill [MODEL] after smoke test)
+## §6 Devpost description (paste as-is; model locked: qwen-turbo)
 
 **Tagline:** The agent you never re-explain your project to.
 
@@ -100,7 +101,7 @@ Qwen call distills the entire session into structured memory: `facts`, `preferen
 and opens by resuming exactly where you left off: "Welcome back — session 4. Where we
 left off: …". No re-explanation, ever.
 
-**How we built it.** Python. All inference is Qwen ([MODEL]) on Alibaba Cloud Model
+**How we built it.** Python. All inference is Qwen (qwen-turbo) on Alibaba Cloud Model
 Studio via the DashScope international OpenAI-compatible endpoint. `agent.py` runs the
 session loop — it is the deployment-proof file; every model call in it goes to Alibaba
 Cloud. `memory.py` owns distillation, forgetting, and crash-safe atomic persistence.
