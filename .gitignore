@@ -1,0 +1,27 @@
+# secrets — never in the repo
+.env
+
+# personal working memory — Hilo's data is yours, not the repo's
+memory.json
+memory.json.corrupt
+last_transcript.json
+
+# working context, not project documentation
+CONTEXT.md
+extras/
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# editors / os
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# demo scratch
+*.log
+session*.log
