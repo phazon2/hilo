@@ -1,0 +1,76 @@
+# Hilo CI — offline tests always; live smoke + scripted demo when the
+# DASHSCOPE_API_KEY repo secret exists. All outputs are committed to the
+# `ci-results` branch so results are readable via plain git (no API needed).
+name: smoke
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    env:
+      DASHSCOPE_API_KEY: ${{ secrets.DASHSCOPE_API_KEY }}
+      QWEN_MODEL: ${{ vars.QWEN_MODEL || 'qwen-turbo' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install deps
+        run: |
+          mkdir -p results
+          pip install -r requirements.txt
+
+      - name: Offline memory-engine tests (no key needed)
+        id: offline
+        shell: bash
+        run: python test_offline.py 2>&1 | tee results/offline.log
+
+      - name: Live smoke test (skipped until secret is set)
+        id: smoke
+        if: env.DASHSCOPE_API_KEY != ''
+        continue-on-error: true
+        shell: bash
+        run: python test_connection.py 2>&1 | tee results/smoke.log
+
+      - name: Scripted demo - session 1 (brief) then session 2 (resume)
+        id: demo
+        if: env.DASHSCOPE_API_KEY != '' && steps.smoke.outcome == 'success'
+        continue-on-error: true
+        shell: bash
+        run: |
+          printf '%s\n' \
+            "We're building Hilo: a memory agent for the Qwen Cloud hackathon, Track 1 MemoryAgent." \
+            "Stack: Python plus Qwen on Alibaba Cloud Model Studio via the DashScope international endpoint." \
+            "Decision: MIT license, single-file agent plus a memory engine, nothing else." \
+            "Open question: which Qwen model gives the fastest demo latency?" \
+            "/quit" | python agent.py 2>&1 | tee results/session1.log
+          echo "---------------------------------------------"
+          printf '%s\n' "/facts" "/quit" | python agent.py 2>&1 | tee results/session2.log
+          cp memory.json results/memory.json 2>/dev/null || true
+
+      - name: Publish results to ci-results branch
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo "run_id: ${GITHUB_RUN_ID}"
+            echo "sha: ${GITHUB_SHA}"
+            echo "date_utc: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo "offline: ${{ steps.offline.outcome }}"
+            echo "smoke: ${{ steps.smoke.outcome }}"
+            echo "demo: ${{ steps.demo.outcome }}"
+            echo "key_present: ${{ env.DASHSCOPE_API_KEY != '' }}"
+          } > results/meta.txt
+          cd results
+          git init -q -b ci-results
+          git -c user.name="hilo-ci" -c user.email="ci@users.noreply.github.com" add -A
+          git -c user.name="hilo-ci" -c user.email="ci@users.noreply.github.com" \
+            commit -qm "ci results run ${GITHUB_RUN_ID}"
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${GITHUB_REPOSITORY}.git" ci-results
