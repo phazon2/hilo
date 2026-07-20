@@ -54,6 +54,27 @@ python test_connection.py     # GREEN? then: python agent.py
 | `/quit` | End session: distill, save, exit |
 | `Ctrl+C` | Same as `/quit` — interruption still saves memory. A crash can't make Hilo forget |
 
+## Why so small — the design rationale
+
+Hilo is ~400 lines on purpose. In a memory track, the scarce resource is the
+context window, and the honest metric is **what recall costs**. Measured on this
+repo's own live demo session (chars/4 ≈ tokens):
+
+| Recall strategy | Cost at session start | Growth over sessions |
+|---|---|---|
+| Replay full history (naive) | ~330 tokens after *one short demo session* | unbounded — O(everything ever said) |
+| **Hilo's distilled memory block** | **~90 tokens** for the same session | **capped** — ≤40 items, resolved threads dropped, stale facts rewritten |
+
+The other deliberate choice is that memory is **unbreakable by construction**:
+atomic writes (temp file + rename), corrupt files quarantined instead of crashing,
+a failed distillation degrades memory to *unchanged* — never to *corrupted* — and
+Ctrl+C anywhere still saves. A memory agent you can't trust to keep its memory
+isn't a memory agent.
+
+Every claim above is executable, not aspirational: `python test_offline.py`
+(13 checks, no key needed) and the CI workflow re-proves the live
+brief→restart→resume loop against Qwen on every push.
+
 ## Tests
 
 ```bash
