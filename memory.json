@@ -1,0 +1,13 @@
+{
+  "facts": [
+    "Hilo is a memory agent for the Qwen Cloud hackathon, Track 1 MemoryAgent.",
+    "Stack: Python plus Qwen on Alibaba Cloud Model Studio via the DashScope international endpoint.",
+    "Decision: MIT license, single-file agent plus a memory engine, nothing else.",
+    "Open question: which Qwen model gives the fastest demo latency?"
+  ],
+  "preferences": [],
+  "open_threads": [
+    "Open question: which Qwen model gives the fastest demo latency?"
+  ],
+  "session_count": 1
+}

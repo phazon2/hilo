@@ -1,0 +1,23 @@
+1) fresh start
+  PASS  empty memory on first run
+  PASS  first-session greeting
+2) session 1: brief -> distill -> save -> reload
+  PASS  round-trip identical
+  PASS  3 facts stored
+  PASS  2 open threads stored
+3) restart: the money shot
+  PASS  greeting announces session 2
+  PASS  greeting resumes open thread
+4) session 2: thread resolved -> timely forgetting
+  PASS  resolved thread forgotten
+  PASS  new fact merged
+5) hard cap (40 items)
+  PASS  total items <= 40
+6) corrupt file recovery
+  PASS  corrupt file -> fresh memory, no crash
+  PASS  corrupt file quarantined
+7) distill failure safety
+[hilo] distillation failed (RuntimeError); keeping previous memory intact.
+  PASS  failed distill keeps memory intact
+
+GREEN: all 13 offline checks passed. The memory engine round-trips.

@@ -1,0 +1,2 @@
+network ok: dashscope-intl.aliyuncs.com reachable
+GREEN: model 'qwen-turbo' answered in 1.2s -> 'pong'

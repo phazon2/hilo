@@ -1,0 +1,7 @@
+run_id: 29722292314
+sha: 934c0ed0391a4fc8c0d0617333e9218cca99c569
+date_utc: 2026-07-20T06:39:35Z
+offline: success
+smoke: success
+demo: success
+key_present: true

@@ -1,0 +1,21 @@
+Hilo | model: qwen-turbo | Qwen on Alibaba Cloud Model Studio (dashscope-intl.aliyuncs.com)
+memory: memory.json | commands: /facts /save /quit (Ctrl+C is safe too)
+
+Welcome back - session 2. I'm holding 4 facts and 1 open thread.
+Where we left off:
+  - Open question: which Qwen model gives the fastest demo latency?
+Keep going, or /facts to see everything I remember.
+
+you> 
+--- Hilo memory ------------------------
+Sessions so far: 1
+Project facts:
+  - Hilo is a memory agent for the Qwen Cloud hackathon, Track 1 MemoryAgent.
+  - Stack: Python plus Qwen on Alibaba Cloud Model Studio via the DashScope international endpoint.
+  - Decision: MIT license, single-file agent plus a memory engine, nothing else.
+  - Open question: which Qwen model gives the fastest demo latency?
+Open threads (unresolved):
+  - Open question: which Qwen model gives the fastest demo latency?
+----------------------------------------
+
+you> [hilo] nothing new this session; memory unchanged.

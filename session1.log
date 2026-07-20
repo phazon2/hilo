@@ -1,0 +1,19 @@
+Hilo | model: qwen-turbo | Qwen on Alibaba Cloud Model Studio (dashscope-intl.aliyuncs.com)
+memory: memory.json | commands: /facts /save /quit (Ctrl+C is safe too)
+
+New project, blank memory. Brief me: what are we building?
+
+you> 
+hilo> Great, we're building Hilo, a memory agent for the Qwen Cloud hackathon, Track 1 MemoryAgent. Let's get started. What's your vision for Hilo? What specific capabilities or features do you want it to have?
+
+you> 
+hilo> Got it. We'll use Python with Qwen on Alibaba Cloud Model Studio via the DashScope international endpoint. What's the next part of the stack or any specific tools you want to include?
+
+you> 
+hilo> Confirmed: MIT license, single-file agent plus a memory engine, nothing else. Let's start with the structure. Should the memory engine be in-memory or persistent?
+
+you> 
+hilo> Let's use Qwen-Max for the fastest demo latency. We can adjust later if needed. Shall we start coding the single-file agent with this setup?
+
+you> [hilo] distilling session into memory...
+[hilo] memory saved to memory.json - 4 facts, 1 open thread. See you next session.
